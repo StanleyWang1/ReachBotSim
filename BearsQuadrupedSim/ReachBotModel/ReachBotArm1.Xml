@@ -1,0 +1,23 @@
+<!--Bear Tolson Demo, 3 DOF boom for reachbot-->
+
+<body name="Base1" pos="0 0 0">
+    <geom name="Base1" size=".09 0.02515 0.0025" type="box" pos="0 0 0" rgba="0 .8 0 1" contype="1" conaffinity="5"/>
+    <body name="Motor11" pos = "0 0 0.069311">
+        <joint name="revolver11" type="hinge" axis="0 0 1" damping="200"/>
+        <geom name="Motor11" size="0.075 0.0381 0.055" type="box" pos="0 0 0" rgba="0.7 0.7 0.7 1" contype="2" conaffinity="5" mass="0.377"/>
+        <body name="Motor12" pos="0 0 0.036176">
+            <site name="motorSiteA1" pos="0 0 -0.0525" size="0.0001"/>
+            <site name="motorSiteB1" pos="0.025 0 -0.0525" size="0.0001"/>
+            <site name="motorSiteC1" pos="-0.025 0 -0.0525" size="0.0001"/>
+            <geom name="Motor12" size="0.06313 0.0605" pos="0 0.0158975 0" euler="0 90 0" type="cylinder" rgba="0 0 1 1" contype="3" conaffinity="5" mass="1.046"/>
+            <joint name="revolver12" type="hinge" axis="1 0 0" pos="0 0 0" damping="200"/>
+            <body name="boom1" pos="0 0.059837 -0.0525">
+                <geom name="boom1" size="0.05" type="sphere" rgba="0.1 0.1 0.1 1" contype="4" conaffinity="5" friction="0.1 0 0" mass="0.344"/>
+                <joint name="prismatic1" type="slide" axis="0 1 0" damping="200"/>
+                <site name="boomSiteA1" pos="0 0.034837 0" size="0.0001"/>
+                <site name="boomSiteB1" pos="0.025 0.034837 0" size="0.0001"/>
+                <site name="boomSiteC1" pos="-0.025 0.034837 0" size="0.0001"/>
+            </body>
+        </body>
+    </body>
+</body>
