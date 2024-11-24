@@ -1,0 +1,12 @@
+Theta1
+    {ticks = 1556} corresponding to {theta1 = 0}
+    increasing theta1 increases motor ticks (same direction)
+
+Theta2
+    {ticks = 2780} corresponding to {theta2 = 0}
+    increasing theta2 increases motor ticks (same direction)
+
+d3
+    {ticks = 300} corresponds to d3 = 0.2 m
+    ~0.0000412 m/tick [NEED BETTER MODELING]
+    increasing ticks increases d3 length (same direction)

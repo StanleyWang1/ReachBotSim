@@ -82,11 +82,15 @@ g_vec = sp.Matrix([sp.diff(U, var) for var in jointspace])
 
 # -------------------- PACKAGE JOINT DYNAMICS AS LAMBDA FUNCTIONS --------------------
 # Bring in physical values for robot parameters
-h_real = 0 # [m]
-l_real = 0 # [m]
-r_real = 0 # [m]
-m_real = 0.5 # [kg]
-g_real = 981 # [m/s^2]
+h_real = 0.080 # [m]
+l_real = 0.016 # [m]
+r_real = 0.063 # [m]
+m_real = 0.1 # [kg]
+g_real = 9.81 # [m/s^2]
 physical_subs = {h:h_real, l:l_real, r:r_real, m:m_real, g:g_real}
 
 M_matrix_sub = M_matrix.subs(physical_subs)
+C_matrix_sub = C_matrix.subs(physical_subs)
+g_vec_sub = g_vec.subs(physical_subs)
+
+# lambdify the sympy functions so they can be evaluated with real joint values
