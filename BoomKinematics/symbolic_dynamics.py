@@ -53,7 +53,7 @@ Jw = sp.Matrix([
 # Inertia of End Effector (point mass)
 m = sp.symbols('m')
 ee_position_outer_product = ee_position * ee_position.T
-I_ee = m * sp.Matrix.eye(3) * ee_position.dot(ee_position) - ee_position_outer_product
+I_ee = m * (sp.Matrix.eye(3) * ee_position.dot(ee_position) - ee_position_outer_product)
 # Mass Matrix
 M_matrix = sp.simplify(m * Jv.T * Jv + Jw.T * I_ee * Jw)
 

@@ -30,11 +30,14 @@ controller.WRITE(BOOM_MOTOR, OPERATING_MODE, 4) # extended position control
 # Velocity/Accel Limits
 controller.WRITE(ROLL_MOTOR, PROFILE_VELOCITY, 100)
 controller.WRITE(PITCH_MOTOR, PROFILE_VELOCITY, 100)
+controller.WRITE(BOOM_MOTOR, PROFILE_VELOCITY, 100)
+controller.WRITE(ROLL_MOTOR, PROFILE_ACCELERATION, 50)
+controller.WRITE(PITCH_MOTOR, PROFILE_ACCELERATION, 50)
 
 # Torque Enable
-controller.WRITE(ROLL_MOTOR, TORQUE_ENABLE, 1)
+controller.WRITE(ROLL_MOTOR, TORQUE_ENABLE,  1)
 controller.WRITE(PITCH_MOTOR, TORQUE_ENABLE, 1)
-controller.WRITE(BOOM_MOTOR, TORQUE_ENABLE, 1)
+controller.WRITE(BOOM_MOTOR, TORQUE_ENABLE,  1)
 
 def sync_write_positions(ticks1, ticks2, ticks3):
     param_success = group_sync_write.addParam(ROLL_MOTOR, ticks1.to_bytes(4, 'little'))
@@ -77,9 +80,37 @@ def FK(ticks1, ticks2, ticks3):
     z = h - np.sin(theta2)*(l+d3) - np.cos(theta2)*r
     return x, y, z
 
-goal_x = [0.2, 0.2, 0.2, 0.2, 0.2]
-goal_y = [-0.2, -0.2, 0.2, 0.2, -0.2]
-goal_z = [0.2, 0.6, 0.6, 0.2, 0.2]
+# goal_x = [0.2, 0.2, 0.2, 0.2, 0.2]
+# goal_y = [-0.2, -0.2, 0.2, 0.2, -0.2]
+# goal_z = [0.2, 0.6, 0.6, 0.2, 0.2]
+
+goal_x = [0.2, 0.45, 0.55, 0.55, 0.2]
+goal_y = [0, 0, 0 , 0, 0]
+goal_z = [0.2, 0.2, 0.2, 0.4, 0.4]
+
+x_min = 0.3
+x_max = 0.49
+x_steps = 200
+
+z_min = 0.2
+z_max = 0.3
+z_steps = 100
+
+x1 = np.linspace(x_min, x_max, x_steps)
+z1 = z_min*np.ones(x_steps)
+
+x2 = x_max*np.ones(z_steps)
+z2 = np.linspace(z_min, z_max, z_steps)
+
+x3 = x_max*np.ones(z_steps)
+z3 = np.linspace(z_max, z_min, z_steps)
+
+x4 = np.linspace(x_max, x_min, x_steps)
+z4 = z_min*np.ones(x_steps)
+
+X_TRAJ = np.concatenate((x1, x2, x3, x4))
+Y_TRAJ = np.zeros(2*(x_steps + z_steps))
+Z_TRAJ = np.concatenate((z1, z2, z3, z4))
 
 # goal_x = [0.2, 0.433, 0.522, 0.522, 0.517, 0.517, 0.437, 
 #           0.2, 0.437, 0.517, 0.517, 0.522, 0.522, 0.433]
@@ -92,18 +123,41 @@ def motion_control_loop():
     """
     Thread function for motion control loop.
     """
-    while True:
-        for x, y, z in zip(goal_x, goal_y, goal_z):
+    ticks1, ticks2, ticks3 = IK(X_TRAJ[0], Y_TRAJ[0], Z_TRAJ[0])
+    print(ticks1, ticks2, ticks3)
+    # sync_write_positions(ticks1, ticks2, ticks3)
+    time.sleep(5)
+    while False:
+        for x, y, z in zip(X_TRAJ, Y_TRAJ, Z_TRAJ):
             ticks1, ticks2, ticks3 = IK(x, y, z)
-            # print(ticks1, ticks2, ticks3)
             sync_write_positions(ticks1, ticks2, ticks3)
-            time.sleep(0.1)  # time for Dynamixel to spin up
-            while True:
-                moving_status = controller.READ(BOOM_MOTOR, MOVING)
-                if moving_status == 0:  # Check if motor has stopped
-                    time.sleep(1)
-                    break  # Exit the inner loop and proceed to the next waypoint
-                time.sleep(0.05)  # Small delay to avoid excessive reading
+
+            # ticks1_actual = controller.READ(ROLL_MOTOR, PRESENT_POSITION)
+            # ticks2_actual = controller.READ(PITCH_MOTOR, PRESENT_POSITION)
+            # ticks3_actual = controller.READ(BOOM_MOTOR, PRESENT_POSITION)
+            # # x_fk, y_fk, z_fk = FK(ticks1_actual, ticks2_actual, ticks3_actual)
+            # x_fk, y_fk, z_fk = FK(ticks1, ticks2, ticks3)
+            # print(f"[FK] x:{x_fk:.3f}, y:{y_fk:.3f}, z:{z_fk:.3f}")
+
+            time.sleep(0.025)
+
+        # for x, y, z in zip(goal_x, goal_y, goal_z):
+        #     ticks1, ticks2, ticks3 = IK(x, y, z)
+        #     # print(ticks1, ticks2, ticks3)
+        #     sync_write_positions(ticks1, ticks2, ticks3)
+        #     time.sleep(0.1)  # time for Dynamixel to spin up
+        #     while True:
+        #         ticks1_actual = controller.READ(ROLL_MOTOR, PRESENT_POSITION)
+        #         ticks2_actual = controller.READ(PITCH_MOTOR, PRESENT_POSITION)
+        #         ticks3_actual = controller.READ(BOOM_MOTOR, PRESENT_POSITION)
+        #         x, y, z = FK(ticks1_actual, ticks2_actual, ticks3_actual)
+        #         print(f"x:{x:.3f}, y:{y:.3f}, z:{z:.3f}")
+            
+        #         moving_status = controller.READ(BOOM_MOTOR, MOVING)
+        #         if moving_status == 0:  # Check if motor has stopped
+        #             time.sleep(2)
+        #             break  # Exit the inner loop and proceed to the next waypoint
+        #         time.sleep(0.05)  # Small delay to avoid excessive reading
 
 def feedback_loop():
     """
@@ -119,16 +173,11 @@ def feedback_loop():
 
 if __name__ == "__main__":
     try:
-        # Create threads for each loop
         motion_thread = threading.Thread(target=motion_control_loop)
-        # feedback_thread = threading.Thread(target=feedback_loop)
-
-        # Start the threads
         motion_thread.start()
-        # feedback_thread.start()
-
-        # Optionally, wait for threads to complete
         motion_thread.join()
+        # feedback_thread = threading.Thread(target=feedback_loop)
+        # feedback_thread.start()
         # feedback_thread.join()
     except KeyboardInterrupt:
         print("\nProgram interrupted by user. Exiting...")
