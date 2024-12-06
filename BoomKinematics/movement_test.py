@@ -93,7 +93,7 @@ x_max = 0.49
 x_steps = 200
 
 z_min = 0.2
-z_max = 0.3
+z_max = 0.4
 z_steps = 100
 
 x1 = np.linspace(x_min, x_max, x_steps)
@@ -102,15 +102,18 @@ z1 = z_min*np.ones(x_steps)
 x2 = x_max*np.ones(z_steps)
 z2 = np.linspace(z_min, z_max, z_steps)
 
-x3 = x_max*np.ones(z_steps)
+x2p5 = np.linspace(x_max, x_max-0.065, z_steps)
+z2p5 = z_max*np.ones(z_steps)
+
+x3 = (x_max-0.065)*np.ones(z_steps)
 z3 = np.linspace(z_max, z_min, z_steps)
 
-x4 = np.linspace(x_max, x_min, x_steps)
+x4 = np.linspace(x_max-0.065, x_min, x_steps)
 z4 = z_min*np.ones(x_steps)
 
-X_TRAJ = np.concatenate((x1, x2, x3, x4))
-Y_TRAJ = np.zeros(2*(x_steps + z_steps))
-Z_TRAJ = np.concatenate((z1, z2, z3, z4))
+X_TRAJ = np.concatenate((x1, x2, x2p5, x3, x4))
+Y_TRAJ = np.zeros(2*(x_steps + z_steps) + z_steps)
+Z_TRAJ = np.concatenate((z1, z2, z2p5, z3, z4))
 
 # goal_x = [0.2, 0.433, 0.522, 0.522, 0.517, 0.517, 0.437, 
 #           0.2, 0.437, 0.517, 0.517, 0.522, 0.522, 0.433]
@@ -125,9 +128,9 @@ def motion_control_loop():
     """
     ticks1, ticks2, ticks3 = IK(X_TRAJ[0], Y_TRAJ[0], Z_TRAJ[0])
     print(ticks1, ticks2, ticks3)
-    # sync_write_positions(ticks1, ticks2, ticks3)
+    sync_write_positions(ticks1, ticks2, ticks3)
     time.sleep(5)
-    while False:
+    while True:
         for x, y, z in zip(X_TRAJ, Y_TRAJ, Z_TRAJ):
             ticks1, ticks2, ticks3 = IK(x, y, z)
             sync_write_positions(ticks1, ticks2, ticks3)
