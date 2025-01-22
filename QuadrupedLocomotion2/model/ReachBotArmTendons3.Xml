@@ -1,0 +1,14 @@
+<tendon>
+    <spatial name="boomvisualA3" width=".01" rgba="0.1 0.1 0.1 1">
+        <site site="boomSiteA3"/>
+        <site site="motorSiteA3"/>
+    </spatial>
+    <spatial name="boomvisualB3" width=".01" rgba="0.1 0.1 0.1 1">
+        <site site="boomSiteB3"/>
+        <site site="motorSiteB3"/>
+    </spatial>
+    <spatial name="boomvisualC3" width=".01" rgba="0.1 0.1 0.1 1">
+        <site site="boomSiteC3"/>
+        <site site="motorSiteC3"/>
+    </spatial>
+</tendon>
