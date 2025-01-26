@@ -1,5 +1,9 @@
 <actuator>
-        <position name="motor31" joint="revolver31" kp="800" ctrlrange="-3.2 3.2" />
-        <position name="motor32" joint="revolver32" kp="800" ctrlrange="0 3.2" />
-        <position name="motor33" joint="prismatic3" kp="1000" ctrlrange="0 1.7" />
+        <position name="motor31p" joint="revolver31" kp="800" ctrlrange="-3.2 3.2" />
+        <position name="motor32p" joint="revolver32" kp="800" ctrlrange="0 3.2" />
+        <position name="motor33p" joint="prismatic3" kp="1000" ctrlrange="0 1.7" />
+
+        <velocity name="motor31v" joint="revolver31" ctrlrange="-1.0 1.0" kv="1.0"/>
+        <velocity name="motor32v" joint="revolver32" ctrlrange="-1.0 1.0" kv="1.0"/>
+        <velocity name="motor33v" joint="prismatic3" ctrlrange="-1.0 1.0" kv="1.0"/>
     </actuator>
