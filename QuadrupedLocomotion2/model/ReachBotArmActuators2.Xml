@@ -1,0 +1,5 @@
+<actuator>
+        <position name="motor21" joint="revolver21" kp="800" ctrlrange="-3.2 3.2" />
+        <position name="motor22" joint="revolver22" kp="800" ctrlrange="0 3.2" />
+        <position name="motor23" joint="prismatic2" kp="1000" ctrlrange="0 1.7" />
+    </actuator>

@@ -16,7 +16,9 @@ def IK(x, y, z):
     global h, r, l
     theta1 = np.arctan2(y, x)
     theta2 = -2*np.arctan2((np.sqrt(x**2 + y**2 + (z-h)**2 - r**2) - np.sqrt(x**2+y**2)), ((z-h) - r))
-    d3 = np.sqrt((np.sqrt(x**2+y**2) - r*np.sin(theta2))**2 + (z-h+r*np.cos(theta2))**2) - l 
+    # d3 = np.sqrt((np.sqrt(x**2+y**2) - r*np.sin(theta2))**2 + (z-h+r*np.cos(theta2))**2) - l 
+    d3 = np.sqrt((x*np.cos(theta1) + y*np.sin(theta1) +r*np.sin(theta2))**2 + (z-h+r*np.cos(theta2))**2) - l 
+
     # d3 = np.sqrt(x**2 + y**2 + (z-h)**2 - r**2) - l
     # theta2 = np.arctan2(r, d3 + l) + np.arctan2(z-h, np.sqrt(x**2 + y**2))
 
