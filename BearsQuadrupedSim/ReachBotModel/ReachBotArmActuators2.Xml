@@ -1,9 +1,0 @@
-<actuator>
-        <position name="motor21p" joint="revolver21" kp="800" ctrlrange="-3.2 3.2" />
-        <position name="motor22p" joint="revolver22" kp="800" ctrlrange="0 3.2" />
-        <position name="motor23p" joint="prismatic2" kp="1000" ctrlrange="0 1.7" />
-
-        <velocity name="motor21v" joint="revolver21" ctrlrange="-1.0 1.0" kv="1.0"/>
-        <velocity name="motor22v" joint="revolver22" ctrlrange="-1.0 1.0" kv="1.0"/>
-        <velocity name="motor23v" joint="prismatic2" ctrlrange="-1.0 1.0" kv="1.0"/>
-    </actuator>

@@ -1,9 +1,0 @@
-<actuator>
-    <position name="motor41p" joint="revolver41" kp="800" ctrlrange="-3.2 3.2" />
-    <position name="motor42p" joint="revolver42" kp="800" ctrlrange="0 3.2" />
-    <position name="motor43p" joint="prismatic4" kp="1000" ctrlrange="0 1.7" />
-
-    <velocity name="motor41v" joint="revolver41" ctrlrange="-1.0 1.0" kv="1.0"/>
-    <velocity name="motor42v" joint="revolver42" ctrlrange="-1.0 1.0" kv="1.0"/>
-    <velocity name="motor43v" joint="prismatic4" ctrlrange="-1.0 1.0" kv="1.0"/>
-</actuator>

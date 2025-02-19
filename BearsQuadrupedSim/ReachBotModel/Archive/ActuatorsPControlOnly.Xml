@@ -2,8 +2,4 @@
         <position name="motor11p" joint="revolver11" kp="800" ctrlrange="-3.2 3.2" />
         <position name="motor12p" joint="revolver12" kp="800" ctrlrange="0 3.2" />
         <position name="motor13p" joint="prismatic1" kp="1000" ctrlrange="0 1.7" />
-
-        <velocity name="motor11v" joint="revolver11" ctrlrange="-1.0 1.0" kv="1.0"/>
-        <velocity name="motor12v" joint="revolver12" ctrlrange="-1.0 1.0" kv="1.0"/>
-        <velocity name="motor13v" joint="prismatic1" ctrlrange="-1.0 1.0" kv="1.0"/>
     </actuator>

@@ -44,13 +44,13 @@ def simulate(model, model_ids, data):
             time.sleep(timestep)
 
         for i in range(len(arms_list)):
-            for j in range(300):
+            for j in range(600):
                 data.ctrl[arms_dict[arms_list[(i + 2) % 4][0]].motor3.id] = .36
                 mujoco.mj_step(model, data)
                 viewer.sync()
                 time.sleep(timestep)
             moveLimb(arms_dict[arms_list[i][0]], model, data, viewer, -np.pi/8, data.qpos[model.jnt_qposadr[arms_dict[arms_list[i][0]].revolute2]], 0.5)
-            for j in range(200):
+            for j in range(600):
                 data.ctrl[arms_dict[arms_list[(i + 2) % 4][0]].motor3.id] = .5
                 mujoco.mj_step(model, data)
                 viewer.sync()
@@ -242,7 +242,7 @@ def organize_ids(model):
 
 
 def main():
-    with open("ReachBot.Xml") as file:
+    with open(r"Archive\ReachBot.Xml") as file:
         xml = file.read()
     model = mujoco.MjModel.from_xml_string(xml)
     data = mujoco.MjData(model)

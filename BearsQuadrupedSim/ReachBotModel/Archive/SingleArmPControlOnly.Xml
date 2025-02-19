@@ -1,0 +1,43 @@
+<mujoco model="ReachBot">
+
+    <visual>
+        <map force="0.1" zfar="30"/>
+        <rgba haze="0.15 0.25 0.35 1"/>
+        <global offwidth="2560" offheight="1440" elevation="-20" azimuth="120"/>
+    </visual>
+
+    <option timestep = "0.01"/>
+
+    <statistic center="0 0 0.7"/>
+
+    <asset>
+        <texture type="skybox" builtin="gradient" rgb1=".3 .5 .7" rgb2="0 0 0" width="32" height="512"/>
+        <texture name="body" type="cube" builtin="flat" mark="cross" width="128" height="128" rgb1="0.8 0.6 0.4" rgb2="0.8 0.6 0.4" markrgb="1 1 1"/>
+        <material name="body" texture="body" texuniform="true" rgba="0.8 0.6 .4 1"/>
+        <texture name="grid" type="2d" builtin="checker" width="512" height="512" rgb1=".1 .2 .3" rgb2=".2 .3 .4"/>
+        <material name="grid" texture="grid" texrepeat="1 1" texuniform="true" reflectance="0"/>
+    </asset>
+
+    <worldbody>
+        <light directional="true" pos="0 0 5" dir="0 0 -1"/>
+        <geom name="floor" size="0 0 .05" type="plane" material="grid" contype="5" condim="3"/>
+        <body name="Anymal" pos="0 0 0.5">
+
+            <geom name="base" size="0.5 0.5 0.5" type="box" pos="0 0 0" mass="30"/>
+            <body name="arm1" pos="0 0 0.5" >
+                <include file="ArmPControlOnly.Xml"/>
+            </body>
+        </body>
+
+
+    </worldbody>
+
+    <tendon>
+        <include file="ReachBotArmTendons1.Xml"/>
+    </tendon>
+
+    <actuator>
+        <include file="ActuatorsPControlOnly.Xml"/>
+    </actuator>
+
+</mujoco>
