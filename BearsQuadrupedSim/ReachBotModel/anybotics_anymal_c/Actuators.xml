@@ -1,0 +1,5 @@
+ <actuator>
+    <position name="motor11p" joint="revolver11" kp="100" ctrlrange="-6.4 6.4" forcelimited="true" forcerange="-25 25"/>
+    <position name="motor12p" joint="revolver12" kp="100" ctrlrange="0 3.2" forcelimited="true" forcerange="-25 25"/>
+    <position name="motor13p" joint="prismatic1" kp="120" ctrlrange="0 3.048" forcelimited="true" forcerange="-476 476"/>
+ </actuator>

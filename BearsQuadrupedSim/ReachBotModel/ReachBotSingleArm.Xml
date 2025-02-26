@@ -35,7 +35,7 @@
                             <geom name="Motor12" size="0.06313 0.0605" pos="0 0.0158975 0" euler="0 90 0" type="cylinder" rgba="0 0 1 1" contype="3" conaffinity="5" mass="1.046"/>
                             <joint name="revolver12" type="hinge" axis="1 0 0" pos="0 0 0" damping="50"/>
                             <body name="boom1" pos="0 0.059837 -0.0525">
-                                <geom name="boom1" size="0.05" type="sphere" rgba="0.1 0.1 0.1 1" contype="4" conaffinity="5" friction="0.1 0 0" mass="0.344"/>
+                                <geom name="boom1" size="0.05" type="sphere" rgba="0.1 0.1 0.1 1" contype="4" conaffinity="5" friction="0.1 0 0" mass="0.5"/>
                                 <joint name="prismatic1" type="slide" axis="0 1 0" damping="40"/>
                                 <site name="boomSiteA1" pos="0 0.034837 0" size="0.0001"/>
                                 <site name="boomSiteB1" pos="0.025 0.034837 0" size="0.0001"/>
@@ -64,9 +64,9 @@
     </tendon>
 
     <actuator>
-        <position name="motor11p" joint="revolver11" kp="800" ctrlrange="-3.2 3.2" forcelimited="true" forcerange="-25 25"/>
-        <position name="motor12p" joint="revolver12" kp="800" ctrlrange="0 3.2" forcelimited="true" forcerange="-25 25"/>
-        <position name="motor13p" joint="prismatic1" kp="1000" ctrlrange="0 1.7" forcelimited="true" forcerange="-476 476"/>
+        <position name="motor11p" joint="revolver11" kp="100" ctrlrange="-3.2 3.2" forcelimited="true" forcerange="-25 25"/>
+        <position name="motor12p" joint="revolver12" kp="100" ctrlrange="0 3.2" forcelimited="true" forcerange="-25 25"/>
+        <position name="motor13p" joint="prismatic1" kp="120" ctrlrange="0 1.7" forcelimited="true" forcerange="-476 476"/>
     </actuator>
 
 </mujoco>
