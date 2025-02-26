@@ -1,0 +1,26 @@
+<!-- Reachbot Mujoco model with 4 arms and no deflection of booms-->
+<!-- Based on Reachbot Models by Bear Tolson @Stanford BDML -->
+<!-- Updated by Samuel Jahn @Stanford BDML -->
+
+<body name="Base3" pos="0 0 0">
+    <geom name="Base3" size=".09 0.02515 0.0025" type="box" pos="0 0 0" rgba="0 .2 0 1" contype="1" conaffinity="5"/>
+    <body name="Motor31" pos = "0 0 0.069311">
+        <joint name="revolver31" type="hinge" axis="0 0 1" damping="20" range="-360 360"/>
+        <geom name="Motor31" size="0.075 0.0381 0.055" type="box" pos="0 0 0" rgba="0.7 0.7 0.7 1" contype="2" conaffinity="5" mass="0.377"/>
+        <body name="Motor32" pos="0 0 0.036176">
+            <site name="motorSiteA3" pos="0 0 -0.0525" size="0.0001"/>
+            <site name="motorSiteB3" pos="0.025 0 -0.0525" size="0.0001"/>
+            <site name="motorSiteC3" pos="-0.025 0 -0.0525" size="0.0001"/>
+            <geom name="Motor32" size="0.06313 0.0605" pos="0 0.0158975 0" euler="0 90 0" type="cylinder" rgba="1 0.1 0.1 1" contype="0" conaffinity="0" mass="1.046"/>
+            <joint name="revolver32" type="hinge" axis="1 0 0" pos="0 0 0" damping="20" range="0 230"/>
+            <body name="boom3" pos="0 0.059837 -0.0525">
+                <geom name="boomEnd3" size="0.05" type="sphere" rgba="0.1 0.1 0.1 1" contype="4" conaffinity="5" mass="0.344"/>
+                <joint name="prismatic3" type="slide" axis="0 1 0" damping="20" range="0 1.7"/>
+                <site name="boomSiteA3" pos="0 0.034837 0" size="0.0001"/>
+                <site name="boomSiteB3" pos="0.025 0.034837 0" size="0.0001"/>
+                <site name="boomSiteC3" pos="-0.025 0.034837 0" size="0.0001"/>
+                <site name="boomEndSite3" pos="0 0 0" size="0.0001"/>
+            </body>
+        </body>
+    </body>
+</body>

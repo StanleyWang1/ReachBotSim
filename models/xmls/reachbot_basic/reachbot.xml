@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<!-- Reachbot Mujoco model with 4 arms and no deflection of booms-->
+<!-- Based on Reachbot Models by Bear Tolson @Stanford BDML -->
+<!-- Updated by Samuel Jahn @Stanford BDML -->
+<mujoco model="reachbot">
+  <option iterations="4" ls_iterations="10" timestep="0.0005" integrator="Euler">
+    <!--<flag eulerdamp="disable"/>-->
+  </option>
+
+  <default>
+    <default class="actuatorRotational">
+      <geom condim="1" contype="0" conaffinity="1"/>
+      <joint axis="0 1 0" armature="0.005" damping="0.5"/>
+      <position forcerange="-25 25" inheritrange="1" kp="35"/>
+      <default class="shoulder">
+        <joint axis="1 0 0" armature="0.005" damping="0.5" limited="true" range="-360 360"/>
+      </default>
+      <default class="elbow">
+        <joint axis="0 1 0" armature="0.005" damping="0.5" limited="true" range="0 230"/>
+      </default>
+    </default>
+    <default class="actuatorPrismatic">
+      <geom condim="1" contype="0" conaffinity="1"/>
+      <joint axis="0 1 0" armature="0.005" damping="0.5"/>
+      <position forcerange="-476 476" inheritrange="1" kp="35"/>
+      <default class="prismatic">
+        <joint axis="0 1 0" armature="0.005" damping="0.5" limited="true" range="0 1.7"/>
+      </default>
+    </default>
+    <default class="armTendon">
+      <tendon width="0.01" rgba="0.1 0.1 0.1 1"/>
+    </default>
+  </default>
+
+
+  <visual>
+    <map force="0.1" zfar="30"/>
+    <rgba haze="0.15 0.25 0.35 1"/>
+    <global offwidth="2560" offheight="1440" elevation="-20" azimuth="120"/>
+  </visual>
+  <statistic center="0 0 0.7"/>
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1=".3 .5 .7" rgb2="0 0 0" width="32" height="512"/>
+    <texture name="body" type="cube" builtin="flat" mark="cross" width="128" height="128" rgb1="0.8 0.6 0.4" rgb2="0.8 0.6 0.4" markrgb="1 1 1"/>
+    <material name="body" texture="body" texuniform="true" rgba="0.8 0.6 .4 1"/>
+    <texture name="grid" type="2d" builtin="checker" width="512" height="512" rgb1=".1 .2 .3" rgb2=".2 .3 .4"/>
+    <material name="grid" texture="grid" texrepeat="1 1" texuniform="true" reflectance="0"/>
+  </asset>
+  <worldbody>
+    <body name="Basis" pos="0 0 0.5">
+      <!-- X axis (red) -->
+      <!-- <geom name="x_axis" fromto="0 0 0 0.1 0 0" type="capsule" size="0.005" rgba="1 0 0 1" contype="0" conaffinity="0"/> -->
+      <!-- Y axis (green) -->
+      <!-- <geom name="y_axis" fromto="0 0 0 0 0.1 0" type="capsule" size="0.005" rgba="0 1 0 1" contype="0" conaffinity="0"/> -->
+      <!-- Z axis (blue) -->
+      <!-- <geom name="z_axis" fromto="0 0 0 0 0 0.1" type="capsule" size="0.005" rgba="0 0 1 1" contype="0" conaffinity="0"/> -->
+    </body>
+    <light directional="true" pos="0 0 5" dir="0 0 -1"/>
+    <!-- <geom name="floor" size="0 0 .05" type="plane" material="grid" contype="5" condim="3"/> -->
+    <body name="mainBody" pos="0 0 0.5">
+      <camera name="track" pos="0.846 -1.3 0.316" xyaxes="0.866 0.500 0.000 -0.171 0.296 0.940" mode="trackcom"/>
+      <site name="imu" pos="0 0 0.1"/>
+      <site name="center" pos="0 0 0"/>
+      <joint name="freejoint" type="free"/>
+      <geom name="mainBody" type="box" size="0.09 0.09 0.0405" mass="5"/>
+      <body name="arm1" pos="0 0.09 0" euler="-90 0 0">
+        <include file="reachbot/xmls/ReachBotArm1.Xml"/>
+      </body>
+      <body name="arm2" pos="0.09 0 0" euler="-90 90 0">
+        <include file="reachbot/xmls/ReachBotArm2.Xml"/>
+      </body>
+      <body name="arm3" pos="0 -0.09 0" euler="-90 180 0">
+        <include file="reachbot/xmls/ReachBotArm3.Xml"/>
+      </body>
+      <body name="arm4" pos="-.09 0 0" euler="-90 270 0">
+        <include file="reachbot/xmls/ReachBotArm4.Xml"/>
+      </body>
+    </body>
+  </worldbody>
+  <tendon>
+    <spatial name="boomvisualA1" class="armTendon">
+      <site site="boomSiteA1"/>
+      <site site="motorSiteA1"/>
+    </spatial>
+    <spatial name="boomvisualB1" class="armTendon">
+      <site site="boomSiteB1"/>
+      <site site="motorSiteB1"/>
+    </spatial>
+    <spatial name="boomvisualC1" class="armTendon">
+      <site site="boomSiteC1"/>
+      <site site="motorSiteC1"/>
+    </spatial>
+    <spatial name="boomvisualA2" class="armTendon">
+      <site site="boomSiteA2"/>
+      <site site="motorSiteA2"/>
+    </spatial>
+    <spatial name="boomvisualB2" class="armTendon">
+      <site site="boomSiteB2"/>
+      <site site="motorSiteB2"/>
+    </spatial>
+    <spatial name="boomvisualC2" class="armTendon">
+      <site site="boomSiteC2"/>
+      <site site="motorSiteC2"/>
+    </spatial>
+    <spatial name="boomvisualA3" class="armTendon">
+      <site site="boomSiteA3"/>
+      <site site="motorSiteA3"/>
+    </spatial>
+    <spatial name="boomvisualB3" class="armTendon">
+      <site site="boomSiteB3"/>
+      <site site="motorSiteB3"/>
+    </spatial>
+    <spatial name="boomvisualC3" class="armTendon">
+      <site site="boomSiteC3"/>
+      <site site="motorSiteC3"/>
+    </spatial>
+    <spatial name="boomvisualA4" class="armTendon">
+      <site site="boomSiteA4"/>
+      <site site="motorSiteA4"/>
+    </spatial>
+    <spatial name="boomvisualB4" class="armTendon">
+      <site site="boomSiteB4"/>
+      <site site="motorSiteB4"/>
+    </spatial>
+    <spatial name="boomvisualC4" class="armTendon">
+      <site site="boomSiteC4"/>
+      <site site="motorSiteC4"/>
+    </spatial>
+  </tendon>
+  <actuator>
+    <position class="actuatorRotational" name="motor11" joint="revolver11"/> 
+    <position class="actuatorRotational" name="motor12" joint="revolver12"/>
+    <position class="actuatorPrismatic" name="motor13" joint="prismatic1"/>
+    <position class="actuatorRotational" name="motor21" joint="revolver21"/>
+    <position class="actuatorRotational" name="motor22" joint="revolver22"/>
+    <position class="actuatorPrismatic" name="motor23" joint="prismatic2"/>
+    <position class="actuatorRotational" name="motor31" joint="revolver31"/>
+    <position class="actuatorRotational" name="motor32" joint="revolver32"/>
+    <position class="actuatorPrismatic" name="motor33" joint="prismatic3"/>
+    <position class="actuatorRotational" name="motor41" joint="revolver41"/>
+    <position class="actuatorRotational" name="motor42" joint="revolver42"/>
+    <position class="actuatorPrismatic" name="motor43" joint="prismatic4"/>
+  </actuator>
+  <sensor>
+    <gyro site="imu" name="gyro"/>
+    <velocimeter site="imu" name="local_linvel"/>
+    <accelerometer site="imu" name="accelerometer"/>
+    <framepos objtype="site" objname="imu" name="position"/>
+    <framezaxis objtype="site" objname="imu" name="upvector"/>
+    <framexaxis objtype="site" objname="imu" name="forwardvector"/>
+    <framelinvel objtype="site" objname="imu" name="global_linvel"/>
+    <frameangvel objtype="site" objname="imu" name="global_angvel"/>
+    <framequat objtype="site" objname="imu" name="orientation"/>
+    <framelinvel objtype="site" objname="boomSiteA1" name="boomEndSite1_global_linvel"/>
+    <framelinvel objtype="site" objname="boomSiteA2" name="boomEndSite2_global_linvel"/>
+    <framelinvel objtype="site" objname="boomSiteA3" name="boomEndSite3_global_linvel"/>
+    <framelinvel objtype="site" objname="boomSiteA4" name="boomEndSite4_global_linvel"/>
+    <framepos objtype="site" objname="boomEndSite1" name="boomEndSite1_pos" reftype="site" refname="imu"/>
+    <framepos objtype="site" objname="boomEndSite2" name="boomEndSite2_pos" reftype="site" refname="imu"/>
+    <framepos objtype="site" objname="boomEndSite3" name="boomEndSite3_pos" reftype="site" refname="imu"/>
+    <framepos objtype="site" objname="boomEndSite4" name="boomEndSite4_pos" reftype="site" refname="imu"/>
+    <framepos objtype="site" objname="center" name="head_pos"/>
+  </sensor>
+</mujoco>
